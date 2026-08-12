@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+/*
+ * Palette pulled straight off the Sazon Stizzy sticker logo:
+ * bubblegum pink, sky-blue script, cream ring, near-black brush strokes,
+ * and the green of the little cilantro leaves.
+ */
+@theme {
+  --color-carbon: #1b1310;
+  --color-carbon-soft: #2a1f19;
+  --color-carbon-line: #3d2e26;
+
+  --color-cream: #fdf7ea;
+  --color-cream-deep: #f7ead2;
+
+  --color-pink: #f5c7d9;
+  --color-pink-soft: #fce6ee;
+  --color-pink-deep: #e090b0;
+  /* Text-safe pink — passes contrast on cream and on white */
+  --color-berry: #a8355f;
+
+  --color-sky: #7cc5ee;
+  --color-sky-soft: #d8eefb;
+  --color-sky-deep: #1c6d9b;
+
+  --color-leaf: #43a34f;
+  --color-leaf-deep: #2c7a3b;
+
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-script: var(--font-yellowtail), "Snell Roundhand", cursive;
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Sticky header shouldn't cover anchor targets */
+  scroll-padding-top: 5rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-carbon);
+  font-family: var(--font-sans);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Fraunces reads warmer with a little of its "soft" and "wonk" dialled in */
+.font-display {
+  font-family: var(--font-display);
+  font-variation-settings: "SOFT" 40, "WONK" 1;
+  letter-spacing: -0.02em;
+}
+
+.font-script {
+  font-family: var(--font-script);
+}
+
+/* The repeating script pattern from their sticker, rebuilt as a page texture */
+.stizzy-pattern {
+  background-color: var(--color-pink);
+  background-image: repeating-linear-gradient(
+    -14deg,
+    transparent 0 22px,
+    rgba(124, 197, 238, 0.35) 22px 24px
+  );
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+::selection {
+  background: var(--color-pink);
+  color: var(--color-carbon);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-sky);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.hide-scrollbar {
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
