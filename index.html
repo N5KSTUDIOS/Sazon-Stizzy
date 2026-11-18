@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0B0A0B">
+<title>Sazon Stizzy</title>
+<meta name="description" content="Dominican food in the Bronx. See today's menu, order ahead for pickup, and book catering.">
+<link rel="icon" href="logo-badge.png">
+<link rel="apple-touch-icon" href="logo-badge.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,400..900&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Layout: phone-first ordering app. One column on mobile (menu one thumb-scroll away, order bar always at the thumb);
+     on desktop a sticky brand panel on the left and the same ordering column on the right. Black with soft neon pink. */
+  --ink:#0B0A0B;
+  --panel:#171216;
+  --panel2:#211920;
+  --line:rgba(255,236,246,.11);
+  --pink:#FF7AC8;
+  --pink-soft:#FFB3DE;
+  --white:#FFF5FA;
+  --muted:#B4A2AE;
+  --leaf:#7BD88F;
+  --glow:0 0 18px rgba(255,122,200,.55),0 0 42px rgba(255,122,200,.25);
+  --display:"Anybody", "Arial Black", Impact, sans-serif;
+  --body:"Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --gutter:16px;
+  --sat:env(safe-area-inset-top,0px);
+  --sab:env(safe-area-inset-bottom,0px);
+  color-scheme:dark;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;background:var(--ink);scroll-padding-top:120px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--ink);color:var(--white);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.locked{overflow:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
+input,select,textarea{font:inherit}
+:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+h1,h2,h3{margin:0;font-weight:inherit;text-wrap:balance}
+p{margin:0}
+.num{font-variant-numeric:tabular-nums}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.kicker{font-family:var(--display);font-weight:800;font-variation-settings:"wdth" 120;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--pink)}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 22px;border:0;border-radius:16px;font-family:var(--display);font-weight:800;font-variation-settings:"wdth" 105;font-size:16px;text-decoration:none;transition:transform .15s,background .2s,box-shadow .2s;white-space:nowrap}
+.btn:active{transform:scale(.97)}
+.btn-pink{background:var(--pink);color:#2A0C1D;box-shadow:var(--glow)}
+.btn-pink:hover{background:#FF8FD2}
+.btn-pink:disabled{background:#4a3a44;color:var(--muted);box-shadow:none;cursor:not-allowed}
+.btn-ghost{background:transparent;color:var(--white);box-shadow:inset 0 0 0 1.5px rgba(255,245,250,.35)}
+.btn-ghost:hover{box-shadow:inset 0 0 0 1.5px var(--white)}
+.btn-block{width:100%}
+
+/* Top bar */
+.top{position:sticky;top:0;z-index:60;padding-top:var(--sat);background:rgba(11,10,11,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top-in{display:flex;align-items:center;gap:10px;height:60px;padding:0 var(--gutter);max-width:1240px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex:none}
+.brand img{width:40px;height:40px;border-radius:50%;box-shadow:0 0 0 2px var(--pink),var(--glow)}
+.brand b{font-family:var(--display);font-weight:900;font-variation-settings:"wdth" 70;font-size:20px;text-transform:uppercase;white-space:nowrap}
+.status{display:inline-flex;align-items:center;gap:7px;font-weight:600;font-size:13px;padding:6px 11px;border-radius:999px;background:var(--panel);border:1px solid var(--line);white-space:nowrap}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--muted);flex:none}
+.status.open i{background:var(--leaf);animation:ping 1.8s infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(123,216,143,.6)}70%{box-shadow:0 0 0 8px rgba(123,216,143,0)}100%{box-shadow:0 0 0 0 rgba(123,216,143,0)}}
+.where{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;gap:6px;font-size:13px;font-weight:600;color:var(--white);text-decoration:none;white-space:nowrap;overflow:hidden}
+.where svg{width:16px;height:16px;flex:none;color:var(--pink)}
+.where span{overflow:hidden;text-overflow:ellipsis}
+.where b{color:var(--pink);font-weight:700;flex:none}
+.where:hover b{text-decoration:underline}
+.w-short,.s-short{display:none}
+.top .status{flex:none}
+@media (max-width:900px){.where b{display:none}}
+@media (max-width:760px){.w-long{display:none}.w-short{display:inline}}
+@media (max-width:440px){.s-long{display:none}.s-short{display:inline}.status{padding:6px 9px}.top-in{gap:8px}}
+.bag-btn{position:relative;width:46px;height:46px;border-radius:14px;border:1px solid var(--line);background:var(--panel);display:grid;place-items:center;flex:none}
+.bag-btn svg{width:22px;height:22px}
+.bag-btn b{position:absolute;top:-6px;right:-6px;min-width:22px;height:22px;border-radius:999px;background:var(--pink);color:#2A0C1D;font-size:12px;display:grid;place-items:center;padding:0 6px;box-shadow:var(--glow)}
+.bag-btn b:empty,.bag-btn b[data-n="0"]{display:none}
+@media (max-width:440px){.brand b{display:none}}
+
+/* App layout */
+.app{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1fr}
+@media (min-width:980px){.app{grid-template-columns:420px minmax(0,1fr);gap:48px;padding:0 24px}}
+
+/* Intro / hero */
+.intro{padding:22px var(--gutter) 8px;display:grid;gap:16px;align-content:start;min-width:0}
+@media (min-width:980px){.intro{padding:36px 0 24px}}
+@media (min-width:980px) and (min-height:1080px){.intro{position:sticky;top:76px;align-self:start}}
+.sign-wrap{display:grid;justify-items:center;gap:10px;padding:10px 0 4px;position:relative}
+.sign{position:relative;width:min(40vw,160px);aspect-ratio:1;border:0;padding:0;background:none;border-radius:50%;isolation:isolate}
+.sign .face{position:relative;z-index:2;width:100%;height:100%;border-radius:50%;transition:filter .5s}
+.sign .ring{position:absolute;inset:-11px;z-index:1;border-radius:50%;border:7px solid #3A1E30;transition:border-color .4s,box-shadow .4s}
+.sign .bloom{position:absolute;inset:-55%;z-index:0;border-radius:50%;background:radial-gradient(circle,rgba(255,122,200,.42) 0%,rgba(255,122,200,.14) 38%,transparent 66%);opacity:0;transition:opacity .6s;pointer-events:none}
+.sign.on .ring{border-color:var(--pink);box-shadow:0 0 4px #fff inset,0 0 7px var(--pink),0 0 18px rgba(255,122,200,.7),0 0 40px rgba(255,122,200,.28),inset 0 0 9px var(--pink)}
+.sign.on .face{filter:brightness(1.04) saturate(1.05) drop-shadow(0 0 11px rgba(255,255,255,.18))}
+.sign.on .bloom{opacity:.5}
+.sign.off .face{filter:grayscale(.55) brightness(.36) contrast(1.15)}
+.sign.igniting .ring,.sign.igniting .face,.sign.igniting .bloom{animation:ignite 1.3s steps(1,end) both}
+.sign.dying .ring,.sign.dying .face,.sign.dying .bloom{animation:die .9s steps(1,end) both}
+@keyframes ignite{0%{opacity:.15}8%{opacity:1}12%{opacity:.2}20%{opacity:.9}24%{opacity:.25}40%{opacity:1}44%{opacity:.5}52%,100%{opacity:1}}
+@keyframes die{0%{opacity:1}20%{opacity:.3}28%{opacity:.9}40%{opacity:.2}55%{opacity:.6}70%,100%{opacity:1}}
+.tube{margin:2px 0 0;font-family:var(--display);font-weight:900;font-variation-settings:"wdth" 120;font-size:22px;letter-spacing:.22em;text-transform:uppercase;color:transparent;-webkit-text-stroke:1.5px #4A2A3D;transition:color .4s,text-shadow .4s}
+.tube.lit{color:#FFE3F3;-webkit-text-stroke:1.5px var(--pink);text-shadow:0 0 6px var(--pink),0 0 18px var(--pink),0 0 40px rgba(255,122,200,.6)}
+.sign-note{font-size:14px;color:var(--muted);text-align:center;min-height:21px}
+.sign-note b{color:var(--white)}
+.intro-text{display:grid;gap:12px;text-align:center;justify-items:center}
+.pov{margin:2px 0 0;display:grid;gap:4px;justify-items:center}
+.pov blockquote{margin:0;font-family:var(--display);font-weight:800;font-variation-settings:"wdth" 90;font-size:22px;line-height:1.15;max-width:22ch}
+.pov figcaption{font-size:14px;color:var(--pink);font-weight:700}
+.pov figcaption::before{content:"— "}
+.intro .intro-copy,.intro .facts{text-align:center;justify-content:center;margin:0 auto}
+@media (min-width:980px){.sign{width:170px}}
+.badge{width:72px;height:72px;border-radius:50%;flex:none;box-shadow:0 0 0 3px var(--pink),var(--glow)}
+
+.title{font-family:var(--display);font-weight:900;font-size:clamp(44px,14.5vw,70px);line-height:.86;text-transform:uppercase;letter-spacing:-.01em}
+.title .ln{display:block;white-space:nowrap}
+.title .ch{display:inline-block;font-variation-settings:"wdth" var(--w,78);transition:font-variation-settings .3s cubic-bezier(.2,.8,.2,1)}
+.title .neon{color:var(--pink);text-shadow:var(--glow)}
+.intro-copy{color:var(--muted);font-size:16px;max-width:42ch}
+.intro-copy strong{color:var(--white)}
+.facts{display:flex;flex-wrap:wrap;gap:8px}
+.fact{font-size:13px;font-weight:600;padding:6px 11px;border-radius:999px;background:var(--panel);border:1px solid var(--line)}
+.drop{display:grid;gap:8px;padding:14px 16px;border-radius:18px;background:linear-gradient(135deg,rgba(255,122,200,.16),rgba(255,122,200,.04));border:1px solid rgba(255,122,200,.35)}
+.drop-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.drop strong{font-family:var(--display);font-weight:900;font-variation-settings:"wdth" 75;font-size:26px;line-height:1;text-transform:uppercase}
+.drop small{color:var(--muted);font-size:13px}
+.meter{height:7px;border-radius:99px;background:rgba(255,245,250,.12);overflow:hidden}
+.meter span{display:block;height:100%;background:var(--pink);border-radius:99px;box-shadow:var(--glow);transition:width .4s}
+.intro-ctas{display:flex;justify-content:center}
+.intro-ctas .btn{width:100%;max-width:360px}
+.again{margin:0 auto;max-width:420px}
+.again{display:none;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:var(--panel);border:1px solid var(--line);text-align:left;width:100%}
+.again.on{display:flex}
+.again span{flex:1;min-width:0}
+.again small{display:block;color:var(--muted);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.again b{font-weight:700}
+.again i{font-style:normal;color:var(--pink);font-weight:700;white-space:nowrap}
+
+/* Category tabs */
+.main{min-width:0;padding-bottom:calc(110px + var(--sab))}
+.cats{position:sticky;top:calc(60px + var(--sat));z-index:40;background:rgba(11,10,11,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.cats-in{display:flex;gap:6px;overflow-x:auto;padding:10px var(--gutter);scrollbar-width:none}
+.cats-in::-webkit-scrollbar{display:none}
+.cat{flex:none;min-height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:transparent;font-weight:600;font-size:14px;color:var(--muted);transition:all .2s}
+.cat[aria-current="true"]{background:var(--pink);border-color:var(--pink);color:#2A0C1D;box-shadow:var(--glow)}
+@media (min-width:980px){.cats{top:61px}.cats-in{padding:12px 0}}
+
+.block{padding:22px var(--gutter) 6px}
+@media (min-width:980px){.block{padding:26px 0 8px}}
+.block-h{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;margin-bottom:12px}
+.block-sub,.menu-note{text-align:center}
+.meet-copy,.story,.card{text-align:center;justify-items:center}
+
+.meet-copy>p{max-width:46ch}
+.meet-copy .meet-quote{border-left:0;padding-left:0;max-width:22ch}
+.card{grid-template-columns:minmax(0,1fr)}
+.maps .btn{white-space:normal;padding:0 10px;min-width:0}
+.grade{flex-direction:column;text-align:center}
+.grade-copy{justify-items:center}
+.hours,.card form,.card .done,.card .maps,.card .text-form{width:100%;text-align:left}
+.scores{justify-content:center}
+.foot{text-align:center;justify-items:center}
+.cats-in{justify-content:flex-start}
+@media (min-width:640px){.cats-in{justify-content:center}}
+.cater-cta{margin-top:16px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;padding:18px;border-radius:20px;text-decoration:none;background:var(--panel);border:1px solid rgba(255,122,200,.4)}
+.cater-cta b{display:block;font-family:var(--display);font-weight:900;font-variation-settings:"wdth" 80;font-size:24px;text-transform:uppercase}
+.cater-cta small{color:var(--muted);font-size:14px}
+.cater-cta i{font-style:normal;font-weight:700;color:var(--pink)}
+.h2{font-family:var(--display);font-weight:900;font-variation-settings:"wdth" 75;font-size:30px;line-height:.95;text-transform:uppercase}
+.h2 em{font-style:normal;color:var(--pink);text-shadow:var(--glow)}
+.block-h small{color:var(--muted);font-size:13px}
+
+/* Picks carousel */
+.picks{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gutter);margin:0 calc(var(--gutter) * -1);padding:4px var(--gutter) 10px;scrollbar-width:none}
+.picks::-webkit-scrollbar{display:none}
+@media (min-width:980px){.picks{margin:0;padding:4px 0 10px;display:grid;grid-template-columns:repeat(2,1fr)}}
+.pick{position:relative;flex:0 0 78%;max-width:320px;scroll-snap-align:start;border-radius:22px;overflow:hidden;background:var(--panel);border:1px solid var(--line)}
+@media (min-width:980px){.pick{max-width:none}}
+.pick .ph{aspect-ratio:4/3;overflow:hidden}
+.pick .ph img{width:100%;height:100%;object-fit:cover}
+.pick-body{padding:12px 14px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.pick-body h3{font-weight:700;font-size:16px;line-height:1.2}
+.pick-body .meta{font-size:14px;color:var(--muted);margin-top:2px}
+.pick-body .meta b{color:var(--white)}
+
+/* Kitchen reel */
+.reel{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gutter);margin:0 calc(var(--gutter) * -1);padding:4px var(--gutter) 8px;scrollbar-width:none}
+.reel::-webkit-scrollbar{display:none}
+.reel-tile{position:relative;margin:0;flex:0 0 62%;max-width:280px;aspect-ratio:4/5;border-radius:20px;overflow:hidden;scroll-snap-align:start;background:var(--panel);border:1px solid var(--line)}
+.reel-tile.vid{box-shadow:0 0 0 1px rgba(255,122,200,.5),0 0 24px rgba(255,122,200,.15)}
+.reel-tile img,.reel-tile video{width:100%;height:100%;object-fit:cover}
+.reel-tile figcaption{position:absolute;left:0;right:0;bottom:0;padding:28px 12px 10px;background:linear-gradient(transparent,rgba(11,10,11,.85));font-family:var(--display);font-weight:900;font-variation-settings:"wdth" 80;font-size:17px;text-transform:uppercase;text-align:left}
+.reel-tile.vid::before{content:"";position:absolute;top:10px;right:10px;z-index:2;width:10px;height:10px;border-radius:50%;background:var(--pink);box-shadow:var(--glow)}
+@media (min-width:980px){.reel{margin:0;padding:4px 0 8px;display:grid;grid-template-columns:repeat(4,1fr)}.reel-tile{max-width:none}.reel-tile:first-child{grid-row:span 2;aspect-ratio:auto}}
+
+/* Menu rows */
+.rows{display:grid}
+.row{display:grid;grid-template-columns:1fr 104px;gap:14px;padding:14px 0;border-bottom:1px solid var(--line);align-items:center}
+.row:last-child{border-bottom:0}
+.row h3{font-weight:700;font-size:17px;line-height:1.2}
+.row p{color:var(--muted);font-size:14px;margin-top:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.meta{display:flex;align-items:center;gap:10px;margin-top:8px;font-size:14px}
+.price{font-weight:700;font-variant-numeric:tabular-nums}
+.left{font-size:12px;font-weight:700;color:var(--muted);padding:3px 8px;border-radius:999px;background:var(--panel2)}
+.left.low{color:#2A0C1D;background:var(--pink-soft)}
+.thumb{position:relative;width:104px;height:104px;border-radius:18px;overflow:visible}
+.thumb .pic{width:100%;height:100%;border-radius:18px;overflow:hidden;background:var(--panel2)}
+.thumb .pic img{width:100%;height:100%;object-fit:cover}
+.tile{width:100%;height:100%;display:grid;place-items:center;text-align:center;padding:8px;font-family:var(--display);font-weight:900;font-variation-settings:"wdth" 60;font-size:20px;line-height:.9;text-transform:uppercase;color:var(--pink);background:radial-gradient(circle at 30% 20%,rgba(255,122,200,.22),transparent 60%),var(--panel2);text-shadow:var(--glow)}
+.plus{position:absolute;right:-6px;bottom:-6px;width:44px;height:44px;border-radius:50%;border:0;background:var(--white);color:var(--ink);font-size:26px;font-weight:600;line-height:1;display:grid;place-items:center;box-shadow:0 6px 16px rgba(0,0,0,.45)}
+.plus:hover{background:var(--pink)}
+.stepper{position:absolute;left:50%;bottom:-10px;transform:translateX(-50%);display:none;align-items:center;background:var(--pink);color:#2A0C1D;border-radius:999px;box-shadow:var(--glow);height:42px}
+.stepper button{width:40px;height:42px;border:0;background:transparent;font-size:22px;font-weight:700;color:inherit}
+.stepper span{min-width:18px;text-align:center;font-weight:800;font-variant-numeric:tabular-nums}
+.in .plus{display:none}
+.in .stepper{display:flex}
+.pick .plus{position:static;flex:none}
+.pick .stepper{position:static;transform:none;flex:none}
+.sold{opacity:.45}
+.sold .pic,.sold .ph{filter:grayscale(1)}
+.sold .plus{display:none}
+.soldtag{position:absolute;inset:auto 0 8px 0;text-align:center;font-size:12px;font-weight:700;color:var(--white)}
+.menu-note{color:var(--muted);font-size:13px;margin-top:14px}
+.block-sub{color:var(--muted);font-size:14px;margin:-4px 0 12px}
+.pp{color:var(--pink);font-weight:800;margin-left:4px}
+.build-btn{flex:none;min-height:44px;padding:0 18px;border:0;border-radius:999px;background:var(--pink);color:#2A0C1D;font-family:var(--display);font-weight:800;font-variation-settings:"wdth" 105;font-size:15px;box-shadow:var(--glow)}
+.build-btn:active{transform:scale(.96)}
+.opts{margin-top:12px;border:1px solid var(--line);border-radius:16px;background:var(--panel);padding:0 14px}
+.opts summary{min-height:50px;color:var(--white)}
+.opts-list{display:grid;gap:14px;padding:0 0 14px}
+@media (min-width:640px){.opts-list{grid-template-columns:1.3fr .8fr 1.3fr}}
+.opts h4{margin:0 0 6px;font-family:var(--display);font-weight:900;font-variation-settings:"wdth" 80;font-size:16px;text-transform:uppercase;color:var(--pink)}
+.opts ul{margin:0;padding:0;list-style:none;display:grid;gap:5px;font-size:14px}
+.opts li small{color:var(--muted)}
+.opts li b{color:var(--pink-soft);font-weight:700}
+.sizes{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.sizes button{min-height:64px;border-radius:14px;border:1px solid var(--line);background:var(--panel);display:grid;gap:2px;align-content:center;padding:6px;line-height:1.15}
+.sizes button b{font-weight:800;font-size:15px}
+.sizes button small{font-size:11px;color:var(--muted)}
+.sizes button[aria-pressed="true"]{background:var(--white);color:var(--ink);border-color:var(--white)}
+.sizes button[aria-pressed="true"] small{color:#5b4b55}
+.field select{appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--pink) 50%),linear-gradient(135deg,var(--pink) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-size:6px 6px;background-repeat:no-repeat;padding-right:38px}
+.field.sub{margin:-2px 0 0 14px;padding-left:12px;border-left:2px solid rgba(255,122,200,.4)}
+.sel-row{display:flex;gap:8px;align-items:center}
+.sel-row select{flex:1;min-width:0}
+.x.sm{width:40px;height:40px;flex:none}
+.addon{min-height:48px;border-radius:14px;border:1.5px dashed rgba(255,122,200,.45);background:transparent;color:var(--pink);font-weight:700;display:flex;justify-content:space-between;align-items:center;padding:0 14px;width:100%}
+.addon span{color:var(--muted);font-weight:600}
+.addon-row{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:48px;font-weight:600}
+.addon-row small{color:var(--muted);font-weight:500}
+.li-d{margin:2px 0 4px;font-size:12px;color:var(--muted);line-height:1.35}
+
+/* Reviews */
+.scores{display:flex;gap:10px;margin-bottom:12px}
+.score{flex:1;padding:12px 14px;border-radius:16px;background:var(--panel);border:1px solid var(--line)}
+.score b{display:block;font-family:var(--display);font-weight:900;font-variation-settings:"wdth" 70;font-size:40px;line-height:.9;color:var(--pink);text-shadow:var(--glow)}
+.score span{font-size:13px;color:var(--muted)}
+.quotes{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 calc(var(--gutter) * -1);padding:0 var(--gutter) 6px;scrollbar-width:none}
+.quotes::-webkit-scrollbar{display:none}
+@media (min-width:980px){.quotes{margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr}}
+.quote{flex:0 0 80%;scroll-snap-align:start;margin:0;padding:16px;border-radius:18px;background:var(--panel);border:1px solid var(--line);display:grid;gap:10px;align-content:space-between}
+.quote blockquote{margin:0;font-family:var(--display);font-weight:800;font-variation-settings:"wdth" 85;font-size:19px;line-height:1.15}
+.quote footer{font-size:13px;color:var(--muted)}
+
+/* Cards / forms */
+.card{border-radius:22px;background:var(--panel);border:1px solid var(--line);padding:18px;display:grid;gap:14px}
+.card p.lead{color:var(--muted)}
+.field{display:grid;gap:6px}
+.field label{font-weight:600;font-size:14px}
+.field input,.field select,.field textarea{min-height:50px;font-size:16px;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--ink);color:var(--white);width:100%}
+.field textarea{min-height:84px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 3px rgba(255,122,200,.2)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+details summary{cursor:pointer;font-weight:600;color:var(--pink);min-height:40px;display:flex;align-items:center}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;pointer-events:none}
+.chip label{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--line);font-size:14px;font-weight:600;cursor:pointer}
+.chip input:checked+label{background:var(--pink);color:#2A0C1D;border-color:var(--pink)}
+.chip input:focus-visible+label{outline:3px solid var(--pink);outline-offset:2px}
+.err{color:#FF9CA8;font-weight:600;font-size:14px}
+.fine{font-size:13px;color:var(--muted)}
+.done{display:grid;gap:8px;padding:16px;border-radius:16px;border:1px dashed var(--pink);background:rgba(255,122,200,.07)}
+.done strong{font-family:var(--display);font-weight:900;font-variation-settings:"wdth" 75;font-size:26px;line-height:1;text-transform:uppercase}
+
+/* Story */
+.story{display:grid;gap:14px}
+.story p{color:var(--muted);font-size:16px}
+.story p strong{color:var(--white)}
+.sauces{display:flex;gap:8px;flex-wrap:wrap}
+.sauce{display:flex;align-items:center;gap:10px;padding:6px 14px 6px 6px;border-radius:999px;background:var(--panel);border:1px solid var(--line);font-weight:600;font-size:14px}
+.sauce i{width:30px;height:30px;border-radius:50%;border:2px solid var(--white)}
+
+/* Meet Stizzy */
+.meet{display:grid;gap:18px}
+@media (min-width:640px){.meet{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:center;gap:26px}}
+@media (max-width:639px){.meet-copy{order:-1}.meet-photo{width:78%;justify-self:center}}
+.meet-photo{margin:0;position:relative;aspect-ratio:4/5;border-radius:24px;overflow:hidden;background:var(--panel);box-shadow:0 0 0 1px rgba(255,122,200,.45),0 0 40px rgba(255,122,200,.18)}
+.meet-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.meet-photo::after{content:"";position:absolute;inset:55% 0 0;background:linear-gradient(transparent,rgba(11,10,11,.75));pointer-events:none}
+.ph-slot{position:absolute;inset:14px;border:1.5px dashed rgba(255,122,200,.5);border-radius:16px;display:grid;place-items:center;text-align:center;padding:16px;color:var(--muted);font-size:14px;background:radial-gradient(circle at 50% 35%,rgba(255,122,200,.16),transparent 60%)}
+.meet-photo figcaption{z-index:3;position:absolute;left:14px;bottom:14px;z-index:2;font-family:var(--display);font-weight:900;font-variation-settings:"wdth" 75;font-size:26px;text-transform:uppercase;color:var(--white);text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.meet-copy{display:grid;gap:14px}
+.meet-copy>p:not(.kicker){color:var(--muted)}
+.meet-quote{margin:0;padding-left:14px;border-left:3px solid var(--pink);font-family:var(--display);font-weight:800;font-variation-settings:"wdth" 88;font-size:26px;line-height:1.12}
+.grade{margin-top:18px;display:flex;gap:16px;align-items:center;padding:16px;border-radius:22px;background:var(--white);color:var(--ink)}
+.grade-photo{flex:none;width:120px;aspect-ratio:564/640;object-fit:cover;border-radius:14px;box-shadow:0 0 0 3px var(--pink),var(--glow);transform:rotate(-3deg)}
+@media (min-width:640px){.grade-photo{width:150px}}
+.grade-letter{flex:none;width:86px;height:86px;border-radius:18px;background:var(--ink);color:var(--white);display:grid;place-items:center;font-family:var(--display);font-weight:900;font-variation-settings:"wdth" 90;font-size:64px;line-height:1;box-shadow:0 0 0 3px var(--pink),var(--glow)}
+.grade-copy{display:grid;gap:4px}
+.grade-copy .kicker{color:#B0307E}
+.grade-copy h3{font-family:var(--display);font-weight:900;font-variation-settings:"wdth" 80;font-size:24px;line-height:1;text-transform:uppercase}
+.grade-copy p{font-size:14px;color:#4a3a44}
+.grade-copy a{font-size:14px;font-weight:700;color:#B0307E}
+.fact-a{text-decoration:none;display:inline-flex;align-items:center;gap:6px;border-color:rgba(255,122,200,.5)}
+.fact-a b{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:5px;background:var(--white);color:var(--ink);font-family:var(--display);font-weight:900;font-size:13px}
+
+/* Visit */
+.maps{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.addr-link{text-decoration:none}
+.addr-link:hover{text-decoration:underline}
+a.addr{text-decoration:none;display:block}
+a.addr:hover{color:var(--pink)}
+.addr{font-family:var(--display);font-weight:900;font-variation-settings:"wdth" 72;font-size:30px;line-height:.95;text-transform:uppercase}
+.hours{margin:0;display:grid}
+.hours div{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:15px}
+.hours div:last-child{border-bottom:0}
+.hours div.today{color:var(--pink);font-weight:700}
+.hours dd{margin:0;font-variant-numeric:tabular-nums}
+.text-form{display:flex;gap:8px}
+.text-form input{flex:1;min-width:0}
+.text-form .btn{min-height:50px}
+
+.foot{padding:28px var(--gutter) 10px;display:grid;gap:10px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);margin-top:26px}
+.foot-big{font-family:var(--display);font-weight:900;font-variation-settings:"wdth" 55;font-size:clamp(56px,18vw,120px);line-height:.85;text-transform:uppercase;color:var(--white)}
+.foot-big span{color:var(--pink);text-shadow:var(--glow)}
+.foot a{text-decoration:none;color:var(--white)}
+@media (min-width:980px){.foot{padding:32px 0 10px}}
+
+/* Bottom order bar */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:70;padding:10px var(--gutter) calc(10px + var(--sab));background:linear-gradient(transparent,rgba(11,10,11,.96) 30%);transform:translateY(120%);transition:transform .35s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+.bar.on{transform:none;pointer-events:auto;visibility:visible}
+.bar:not(.on){visibility:hidden;transition:transform .35s cubic-bezier(.2,.8,.2,1),visibility 0s .35s}
+.bar-btn{width:100%;max-width:560px;margin:0 auto;min-height:60px;border:0;border-radius:18px;background:var(--pink);color:#2A0C1D;display:flex;align-items:center;gap:12px;padding:0 18px;font-weight:700;box-shadow:var(--glow)}
+.bar-btn .count{display:grid;place-items:center;min-width:30px;height:30px;border-radius:9px;background:rgba(42,12,29,.15);font-weight:800}
+.bar-btn .lbl{flex:1;text-align:left;font-family:var(--display);font-weight:800;font-variation-settings:"wdth" 105;font-size:17px}
+.bar-btn .amt{font-family:var(--display);font-weight:900;font-size:18px;font-variant-numeric:tabular-nums}
+@media (min-width:980px){.bar{left:auto;right:24px;bottom:20px;width:420px;padding:0;background:none;transform:translateY(calc(100% + 40px))}.bar.on{transform:none}}
+
+/* Checkout sheet */
+.scrim{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:opacity .3s}
+.scrim.on{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:90;max-height:92vh;height:92vh;background:var(--ink);border-radius:24px 24px 0 0;border-top:1px solid rgba(255,122,200,.4);box-shadow:0 -20px 60px rgba(255,122,200,.12);transform:translateY(105%);transition:transform .42s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column}
+.sheet.open{transform:none}
+@media (min-width:980px){.sheet{left:auto;right:24px;bottom:24px;top:84px;height:auto;max-height:none;width:440px;border-radius:24px;border:1px solid rgba(255,122,200,.4)}}
+.grab{width:44px;height:5px;border-radius:9px;background:rgba(255,245,250,.25);margin:10px auto 0}
+.sh-head{display:flex;justify-content:space-between;align-items:center;padding:8px var(--gutter) 12px;border-bottom:1px solid var(--line)}
+.sh-head h2{font-family:var(--display);font-weight:900;font-variation-settings:"wdth" 75;font-size:28px;text-transform:uppercase}
+.x{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--panel);font-size:16px}
+.sh-body{flex:1;overflow:auto;overscroll-behavior:contain;padding:6px var(--gutter) 18px;display:grid;gap:18px;align-content:start}
+.sh-sec{display:grid;gap:10px}
+.sh-sec>h3{font-weight:700;font-size:15px;display:flex;justify-content:space-between}
+.sh-sec>h3 small{font-weight:500;color:var(--muted)}
+.li{display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.li .tn{width:52px;height:52px;border-radius:12px;overflow:hidden}
+.li .tn img{width:100%;height:100%;object-fit:cover}
+.li .tn .tile{font-size:12px}
+.li h4{margin:0;font-weight:700;font-size:15px;line-height:1.2}
+.li .price{font-size:14px;color:var(--muted)}
+.qty{display:flex;align-items:center;border:1px solid var(--line);border-radius:999px;height:40px}
+.qty button{width:38px;height:40px;border:0;background:transparent;font-size:18px;font-weight:700}
+.qty span{min-width:16px;text-align:center;font-weight:700;font-variant-numeric:tabular-nums}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:4px;border-radius:16px;background:var(--panel);border:1px solid var(--line)}
+.seg button{min-height:52px;border:0;border-radius:12px;background:transparent;font-weight:700;font-size:15px;display:grid;line-height:1.15}
+.seg button small{font-weight:500;font-size:12px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--white);color:var(--ink)}
+.seg button[aria-pressed="true"] small{color:#5b4b55}
+.seg button:disabled{opacity:.4;cursor:not-allowed}
+.times{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.times::-webkit-scrollbar{display:none}
+.time{flex:none;min-height:44px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:var(--panel);font-weight:700;font-size:14px;font-variant-numeric:tabular-nums}
+.time[aria-pressed="true"]{background:var(--pink);border-color:var(--pink);color:#2A0C1D}
+.pay{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.pay button{min-height:50px;border-radius:14px;border:1px solid var(--line);background:var(--panel);font-weight:700;font-size:14px}
+.pay button[aria-pressed="true"]{border-color:var(--white);background:var(--white);color:var(--ink)}
+.save{display:flex;gap:10px;align-items:center;font-size:14px;color:var(--muted);min-height:40px}
+.save input{width:20px;height:20px;accent-color:var(--pink)}
+.sh-foot{padding:12px var(--gutter) calc(14px + var(--sab));border-top:1px solid var(--line);display:grid;gap:8px;background:var(--ink)}
+.tot{display:flex;justify-content:space-between;font-size:14px;color:var(--muted)}
+.tot b{color:var(--leaf)}
+.big-ok{display:grid;justify-items:center;text-align:center;gap:10px;padding:24px 0 8px}
+.big-ok .ring{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;background:var(--pink);color:#2A0C1D;font-size:40px;font-weight:900;box-shadow:var(--glow)}
+.big-ok strong{font-family:var(--display);font-weight:900;font-variation-settings:"wdth" 75;font-size:34px;line-height:.95;text-transform:uppercase}
+.big-ok p{color:var(--muted);max-width:32ch}
+
+.toast{position:fixed;left:50%;top:calc(72px + var(--sat));z-index:95;transform:translate(-50%,-140%);opacity:0;visibility:hidden;background:var(--white);color:var(--ink);border-radius:999px;padding:10px 16px;font-weight:700;font-size:14px;transition:transform .3s,opacity .3s,visibility .3s;box-shadow:0 10px 30px rgba(0,0,0,.4);max-width:calc(100% - 32px);text-align:center}
+.toast.show{transform:translate(-50%,0);opacity:1;visibility:visible}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="#top" aria-label="Sazon Stizzy, back to top"><img src="logo-badge.png" alt=""><b>Sazon Stizzy</b></a>
+    <a class="where maps-link" href="https://maps.google.com/?q=126+W+238th+Street,+New+York,+NY+10040" target="_blank" rel="noopener" aria-label="Directions to 126 W 238th Street, New York, NY 10040">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+      <span class="w-long">126 W 238th Street, New York, NY 10040</span><span class="w-short">126 W 238th St</span><b>Directions →</b>
+    </a>
+    <span class="status" id="topStatus"><i></i><span class="s-long">Checking hours…</span><span class="s-short"></span></span>
+    <button class="bag-btn" id="bagBtn" aria-label="Open your order">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+      <b id="bagCount" data-n="0">0</b>
+    </button>
+  </div>
+</header>
+
+<div class="app" id="top">
+  <aside class="intro">
+    <div class="sign-wrap">
+      <button class="sign off" id="sign" aria-label="Sazon Stizzy sign">
+        <span class="bloom" aria-hidden="true"></span>
+        <span class="ring" aria-hidden="true"></span>
+        <img class="face" src="logo-badge.png" alt="Sazon Stizzy">
+      </button>
+      <p class="tube" id="tube" aria-hidden="true">Closed</p>
+    </div>
+    <div class="intro-text">
+      <h1 class="title" id="title" aria-label="Dominican soul food.">
+        <span class="ln" data-split>Dominican</span>
+        <span class="ln neon" data-split>soul food.</span>
+      </h1>
+    </div>
+    <div class="facts">
+      <span class="fact" id="factReady">Ready in about 25 min</span>
+      <span class="fact">Takeout only</span>
+      <span class="fact">No app fees</span>
+    </div>
+    <button class="again" id="againBtn"><span><b>Order again</b><small id="againList"></small></span><i>Add all →</i></button>
+    <div class="intro-ctas">
+      <a class="btn btn-pink" href="#menu">Start my order</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <nav class="cats" aria-label="Menu sections">
+      <div class="cats-in" id="cats"></div>
+    </nav>
+
+    <section class="block" id="menu" aria-labelledby="picksH">
+      <div class="block-h"><h2 class="h2" id="picksH">Build your <em>own</em></h2><small id="menuDay">Today's menu</small></div>
+      <p class="block-sub">Pick a size, then choose your mains and sides from the dropdowns.</p>
+      <div class="picks" id="picks"></div>
+      <details class="opts"><summary>See all mains, sauces &amp; sides</summary><div class="opts-list" id="optsList"></div></details>
+    </section>
+    <section class="block" id="reel" aria-labelledby="reelH">
+      <div class="block-h"><h2 class="h2" id="reelH">Fresh out the <em>kitchen</em></h2></div>
+      <p class="block-sub">Real plates from Stizzy's kitchen.</p>
+      <div class="reel">
+        <figure class="reel-tile vid"><video class="auto" src="reel-sauce.mp4" poster="reel-sauce.jpg" muted loop playsinline preload="metadata" aria-label="Sauce being drizzled over loaded mac fries with fried chicken"></video><figcaption>Loaded Mac Fries</figcaption></figure>
+        <figure class="reel-tile"><img src="plate-salmon-steak.jpg" alt="Salmon with steak, rice and mac" loading="lazy"></figure>
+        <figure class="reel-tile"><img src="plate-pasta-chicken.jpg" alt="Chicken in garlic sauce with creamy pasta and potato salad" loading="lazy"></figure>
+        <figure class="reel-tile vid"><video class="auto" src="reel-plates.mp4" poster="reel-plates.jpg" muted loop playsinline preload="metadata" aria-label="Close-ups of plates with maduros, tostones, rice and mac"></video><figcaption>Maduros, tostones & mac</figcaption></figure>
+        <figure class="reel-tile"><img src="plate-bbq-mac-fries.jpg" alt="BBQ boneless chicken with mac and fries" loading="lazy"></figure>
+        <figure class="reel-tile"><img src="plate-ribs-shrimp.jpg" alt="Plate with shrimp and mac" loading="lazy"></figure>
+        <figure class="reel-tile"><img src="plate-chicken-combo.jpg" alt="Chicken with glazed tenders, fries and mac" loading="lazy"></figure>
+      </div>
+    </section>
+    <div id="groups"></div>
+    <div class="block"><p class="menu-note">Please tell us about any food allergies or dietary needs. We're happy to accommodate you.</p>
+      <a class="cater-cta" href="#catering"><span><b>Feeding a crowd?</b><small>Parties, office lunches, family nights</small></span><i>Get a catering quote →</i></a></div>
+
+    <section class="block" id="meet" aria-labelledby="meetH">
+      <div class="meet">
+        <figure class="meet-photo" id="meetPhoto">
+          <img src="stizzy.jpg" alt="Stizzy standing in her shop on West 238th Street" loading="lazy">
+          <figcaption>Stizzy</figcaption>
+        </figure>
+        <div class="meet-copy">
+          <p class="kicker">Meet Stizzy</p>
+          <h2 class="h2" id="meetH">The cook behind <em>the sazón.</em></h2>
+          <blockquote class="meet-quote">Every meal is cooked with love, from our family to yours.</blockquote>
+          <p>Stizzy learned to cook Dominican food from her grandma, and they still cook side by side: from scratch, no shortcuts, the same recipes her family has made for years. Whether it's one plate for lunch or trays for the whole party, it comes out of the kitchen on 238th the way it would at home.</p>
+        </div>
+      </div>
+      <div class="grade" id="grade">
+        <img class="grade-photo" src="grade-a.jpg" alt="Sazon Stizzy's NYC sanitary inspection grade card showing an A" loading="lazy">
+        <div class="grade-copy">
+          <p class="kicker">NYC Health inspection</p>
+          <h3>Sanitary grade: A</h3>
+          <p>The city inspects every NYC restaurant kitchen. Sazon Stizzy earned the top grade at its October 2026 inspection.</p>
+        </div>
+      </div>
+    </section>
+    <section class="block" id="reviews" aria-labelledby="revH">
+      <div class="block-h"><h2 class="h2" id="revH">People <em>talk</em></h2></div>
+      <div class="scores">
+        <div class="score"><b>4.7</b><span>3,000+ ratings on Uber Eats</span></div>
+        <div class="score"><b>4.4</b><span>78 reviews on Google</span></div>
+      </div>
+      <div class="quotes">
+        <figure class="quote"><blockquote>“This food is absolutely, amazingly DELICIOUS!!!!”</blockquote><footer>Julie M., Uber Eats</footer></figure>
+        <figure class="quote"><blockquote>“The best chicken you'll ever taste!”</blockquote><footer>Betinia D., Uber Eats</footer></figure>
+        <figure class="quote"><blockquote>“Food was fresh, nicely presented, and the portions were on point.”</blockquote><footer>Eddy P., Uber Eats</footer></figure>
+        <figure class="quote"><blockquote>“The Mac and Cheese was creamy and delicious.”</blockquote><footer>Google review</footer></figure>
+      </div>
+    </section>
+
+    <section class="block" id="catering" aria-labelledby="catH">
+      <div class="card" id="caterCard"></div>
+    </section>
+
+
+    <section class="block" id="visit" aria-labelledby="visitH">
+      <div class="card">
+        <p class="kicker" id="visitH">Visit · Takeout only</p>
+        <a class="addr maps-link" href="https://maps.google.com/?q=126+W+238th+Street,+New+York,+NY+10040" target="_blank" rel="noopener">126 W 238th Street<br>New York, NY 10040</a>
+        <div class="maps">
+          <a class="btn btn-ghost" href="https://maps.apple.com/?daddr=126+W+238th+Street,+New+York,+NY+10040" target="_blank" rel="noopener">Apple Maps</a>
+          <a class="btn btn-ghost" href="https://www.google.com/maps/dir/?api=1&destination=126+W+238th+Street,+New+York,+NY+10040" target="_blank" rel="noopener">Google Maps</a>
+        </div>
+        <dl class="hours" id="hours"></dl>
+        <p class="fine"><b style="color:var(--white)">NYC Health grade A.</b> Hours shown are a placeholder until Stizzy confirms them.</p>
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="textH">
+      <div class="card" id="textCard">
+        <h2 class="h2" id="textH">Hear about <em>specials</em></h2>
+        <p class="lead">One text when there's a new special or a holiday menu. That's it.</p>
+        <form class="text-form" id="textForm" novalidate>
+          <label class="sr" for="txtPhone">Phone number</label>
+          <div class="field" style="flex:1"><input id="txtPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="Your phone number"></div>
+          <button class="btn btn-pink" type="submit">Text me</button>
+        </form>
+        <p class="fine" id="textMsg">Reply STOP any time to leave the list.</p>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <div class="foot-big">Sazon <span>Stizzy</span></div>
+      <a class="maps-link" href="https://maps.google.com/?q=126+W+238th+Street,+New+York,+NY+10040" target="_blank" rel="noopener">Dominican soul food · 126 W 238th Street, New York, NY 10040 · Takeout only</a>
+      <a href="https://instagram.com/sazonstizzy" target="_blank" rel="noopener">@sazonstizzy on Instagram ↗</a>
+      <span>Site by Feastbyte</span>
+    </footer>
+  </main>
+</div>
+
+<div class="bar" id="bar"><button class="bar-btn" id="barBtn"><span class="count" id="barCount">0</span><span class="lbl">View order</span><span class="amt" id="barAmt">$0</span></button></div>
+
+<div class="scrim" id="scrim"></div>
+<section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Your order" inert>
+  <div class="grab" aria-hidden="true"></div>
+  <div class="sh-head"><h2>Your order</h2><button class="x" id="closeSheet" aria-label="Close order">✕</button></div>
+  <div class="sh-body" id="shBody"></div>
+  <div class="sh-foot" id="shFoot"></div>
+</section>
+<section class="sheet" id="builder" role="dialog" aria-modal="true" aria-labelledby="bTitle" inert>
+  <div class="grab" aria-hidden="true"></div>
+  <div class="sh-head"><h2 id="bTitle">Build your plate</h2><button class="x" id="closeBuilder" aria-label="Close">✕</button></div>
+  <div class="sh-body" id="bBody"></div>
+  <div class="sh-foot" id="bFoot"></div>
+</section>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script>
+(() => {
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const money = n => '$' + (Number.isInteger(n) ? n : n.toFixed(2));
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const store = {
+  get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+};
+const buzz = () => { try { navigator.vibrate && navigator.vibrate(8); } catch (e) {} };
+
+/* ---------- Hours (Tue–Sat 3:00–8:30 PM per Google; placeholder) ---------- */
+const OPEN = 15 * 60, CLOSE = 20 * 60 + 30, OPEN_DAYS = [2, 3, 4, 5, 6], READY_MIN = 25;
+const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const fmt = m => { const h = Math.floor(m / 60), mm = m % 60; return `${((h + 11) % 12) + 1}:${String(mm).padStart(2, '0')} ${h >= 12 ? 'PM' : 'AM'}`; };
+const now = () => { const d = new Date(); return { d, day: d.getDay(), min: d.getHours() * 60 + d.getMinutes() }; };
+/* Preview: add #open or #closed to the link to show either look */
+const FORCE = location.hash === '#open' ? true : location.hash === '#closed' ? false : null;
+const isOpenNow = () => { if (FORCE !== null) return FORCE; const n = now(); return OPEN_DAYS.includes(n.day) && n.min >= OPEN && n.min < CLOSE - READY_MIN; };
+function statusText() {
+  if (FORCE === true) return { open: true, t: `Open · until ${fmt(CLOSE)}` };
+  if (FORCE === false) return { open: false, t: `Closed · opens ${fmt(OPEN)}` };
+  const { day, min } = now();
+  if (OPEN_DAYS.includes(day) && min >= OPEN && min < CLOSE) return { open: true, t: `Open · until ${fmt(CLOSE)}` };
+  if (OPEN_DAYS.includes(day) && min < OPEN) return { open: false, t: `Opens ${fmt(OPEN)}` };
+  for (let i = 1; i <= 7; i++) { const dd = (day + i) % 7; if (OPEN_DAYS.includes(dd)) return { open: false, t: `Closed · opens ${i === 1 ? 'tomorrow' : DAYS[dd].slice(0, 3)}` }; }
+}
+function serviceDay() {
+  const { d, day, min } = now();
+  if (OPEN_DAYS.includes(day) && min < CLOSE - 30) return { offset: 0, date: d, start: Math.max(OPEN, Math.ceil((min + READY_MIN) / 15) * 15) };
+  for (let i = 1; i <= 7; i++) { const dd = (day + i) % 7; if (OPEN_DAYS.includes(dd)) { const n = new Date(d); n.setDate(d.getDate() + i); return { offset: i, date: n, start: OPEN }; } }
+}
+const dayWord = sd => sd.offset === 0 ? 'today' : sd.offset === 1 ? 'tomorrow' : DAYS[sd.date.getDay()];
+function renderHours() {
+  const s = statusText(), el = $('#topStatus');
+  setSign(s.open);
+  el.classList.toggle('open', s.open); el.querySelector('.s-long').textContent = s.t; el.querySelector('.s-short').textContent = s.open ? `Open til ${fmt(CLOSE).replace(':00', '').replace(' PM', 'pm')}` : (s.t.startsWith('Opens') ? `Opens ${fmt(OPEN).replace(':00', '').replace(' PM', 'pm')}` : 'Closed');
+  const sd = serviceDay();
+  $('#menuDay').textContent = sd.offset === 0 ? (isOpenNow() ? 'Ordering open now' : `Preorder for ${fmt(OPEN)}+`) : `Preorder for ${dayWord(sd)}`;
+  $('#factReady').textContent = isOpenNow() ? `Ready in about ${READY_MIN} min` : `Preorder now · pickup from ${fmt(OPEN)}`;
+  const t = now().day;
+  $('#hours').innerHTML = [2, 3, 4, 5, 6, 0, 1].map(i => `<div class="${i === t ? 'today' : ''}"><dt>${DAYS[i]}${i === t ? ' · today' : ''}</dt><dd>${OPEN_DAYS.includes(i) ? `${fmt(OPEN)} – ${fmt(CLOSE)}` : 'Closed'}</dd></div>`).join('');
+}
+/* ---------- LED sign: lit during open hours, dark after close ---------- */
+let signState = null, signTimer;
+function signNote() {
+  if (!$('#signNote')) return;
+  const { day } = now(), span = `${fmt(OPEN)} – ${fmt(CLOSE)}`;
+  if (OPEN_DAYS.includes(day)) { $('#signNote').innerHTML = `<b>Today's hours</b> ${span}`; return; }
+  let next = ''; for (let i = 1; i <= 7; i++) { const dd = (day + i) % 7; if (OPEN_DAYS.includes(dd)) { next = i === 1 ? 'tomorrow' : DAYS[dd]; break; } }
+  $('#signNote').innerHTML = `<b>Closed today</b> · Open ${next} ${span}`;
+}
+function paintSign(on, anim) {
+  const sign = $('#sign'), tube = $('#tube');
+  sign.classList.remove('igniting', 'dying'); void sign.offsetWidth;
+  sign.classList.toggle('on', on); sign.classList.toggle('off', !on);
+  if (anim && !reduce) sign.classList.add(on ? 'igniting' : 'dying');
+  tube.textContent = on ? 'Open' : 'Closed';
+  tube.classList.toggle('lit', on);
+}
+function setSign(open) {
+  if (signState === open) return;
+  const first = signState === null;
+  signState = open;
+  paintSign(open, !first || open);
+  signNote(open);
+}
+$('#sign').addEventListener('click', () => {
+  clearTimeout(signTimer);
+  paintSign(true, true);
+  if (!signState) signTimer = setTimeout(() => paintSign(false, true), 2400);
+});
+if (/iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent) && 'ontouchend' in document) $$('a.maps-link').forEach(a => a.href = 'https://maps.apple.com/?daddr=126+W+238th+Street,+New+York,+NY+10040');
+renderHours(); setInterval(renderHours, 60000);
+new IntersectionObserver(([en]) => $('.top').classList.toggle('scrolled', !en.isIntersecting), { rootMargin: '-60px 0px 0px 0px' }).observe($('#sign'));
+
+/* ---------- Menu (from Stizzy's Build Your Own board) ---------- */
+const SAUCES = ['BBQ', 'Garlic Parm', "Mike's Hot Honey", 'Buffalo', 'Sweet Chili', 'Honey Garlic'];
+const MAINS = [
+  { id: 'bistec', name: 'Bistec Guisado', sub: 'Dominican stew steak' },
+  { id: 'creme', name: 'Grilled Chicken a la Creme' },
+  { id: 'shrimp', name: 'Shrimp', opt: { label: 'Style', list: ['Plain', 'Creamy garlic sauce'] } },
+  { id: 'salmon', name: 'Salmon', up: 5, opt: { label: 'Style', list: ['Plain', 'Creamy garlic sauce'] } },
+  { id: 'boneless', name: 'Boneless Fried Chicken', opt: { label: 'Sauce', list: SAUCES } }
+];
+const SIDES = ['Moro Negro (black bean rice)', 'Arroz Amarillo (yellow rice)', 'Dominican Spaghetti', 'Garlic Mash (puré de papa)', 'Mac Attack', 'French Fries', 'Maduros (sweet plantains)', 'Tostones (green plantains)', 'Yuca Fries', 'Ensalada de Codito (macaroni salad)', 'Ensalada Verde (green salad)'];
+const DRINKS = ['Pomegranate Lemonade', 'Chinola', 'Piñola', 'Fresita Lemonade', 'OG Lemonade'];
+const SIZES = {
+  mini: { name: 'Mini Lunch', price: 12, mains: 1, sides: 1, allowed: ['shrimp', 'boneless'], img: 'plate-tenders-mac.jpg', desc: '1 main + 1 side. Shrimp or boneless chicken.' },
+  medium: { name: 'Medium', price: 23, mains: 1, sides: 2, img: 'plate-fried-rice-pasta.jpg', desc: '1 main + 2 sides.' },
+  full: { name: 'Full', price: 28, mains: 2, sides: 2, img: 'plate-steak-tostones.jpg', desc: '2 mains + 2 sides.' }
+};
+const EXTRA_SIDE = 7, SIDE_MAC = 9, DRINK = 6;
+const ITEMS = [
+  { id: 'xside', name: 'Extra side', cat: 'sides', price: EXTRA_SIDE, desc: 'Any side from the list, on its own.', build: 'side' },
+  { id: 'mac', name: 'Side of Mac Attack', cat: 'sides', price: SIDE_MAC, desc: 'A full side of the mac everyone talks about.' },
+  ...DRINKS.map(d => ({ id: 'drink-' + d.toLowerCase().replace(/[^a-z]+/g, '-'), name: d, cat: 'drinks', price: DRINK, desc: 'House-made.' })),
+  { id: 'chaufa', name: 'Chaufa', cat: 'kitchen', price: 24, desc: 'Fried rice, Dominican style, loaded.' },
+  { id: 'sweet', name: 'Sweet Chick', cat: 'kitchen', price: 16.5, desc: 'Fried chicken with a sweet, sticky glaze.' },
+  { id: 'canoa', name: "Canoa's", cat: 'kitchen', price: 18, desc: 'Sweet plantain boats, stuffed and baked.' },
+  { id: 'tres', name: 'Tres Leche Jar', cat: 'kitchen', price: 10, desc: 'Tres leches cake, layered in a jar.' }
+];
+const GROUPS = [['sides', 'Sides & add-ons'], ['drinks', 'Drinks'], ['kitchen', 'Specials']];
+const byId = id => ITEMS.find(m => m.id === id);
+const mainById = id => MAINS.find(m => m.id === id);
+
+/* cart: lines of { key, name, detail, unit, qty, img } */
+let lines = [];
+const lineQty = key => (lines.find(l => l.key === key) || {}).qty || 0;
+const bagCount = () => lines.reduce((a, l) => a + l.qty, 0);
+const bagTotal = () => lines.reduce((a, l) => a + l.unit * l.qty, 0);
+function addLine(line, n = 1) {
+  const ex = lines.find(l => l.key === line.key);
+  ex ? ex.qty += n : lines.push({ ...line, qty: n });
+}
+function bumpLine(key, d) {
+  const l = lines.find(x => x.key === key); if (!l) return;
+  l.qty += d; if (l.qty <= 0) lines = lines.filter(x => x !== l);
+}
+
+$('#cats').innerHTML = [['menu', 'Build your own'], ...GROUPS].map(([k, v], i) => `<button class="cat" id="cat-${k}" data-jump="${k === 'menu' ? 'menu' : 'g-' + k}" aria-current="${i === 0}">${v}</button>`).join('');
+
+$('#picks').innerHTML = Object.entries(SIZES).map(([k, s]) => `<article class="pick">
+  <div class="ph"><img src="${s.img}" alt="${esc(s.name)} plate" loading="lazy"></div>
+  <div class="pick-body"><div><h3>${esc(s.name)} <span class="pp">${money(s.price)}</span></h3><div class="meta">${esc(s.desc)}</div></div>
+  <button class="build-btn" data-build="${k}">Build it</button></div></article>`).join('');
+
+$('#optsList').innerHTML = `
+  <div><h4>Mains</h4><ul>${MAINS.map(m => `<li>${esc(m.name)}${m.sub ? ` <small>${esc(m.sub)}</small>` : ''}${m.opt && m.id !== 'boneless' ? ' <small>plain or creamy garlic</small>' : ''}${m.up ? ` <b>+${money(m.up)}</b>` : ''}${m.id === 'boneless' ? ' <small>in your choice of sauce</small>' : ''}</li>`).join('')}</ul></div>
+  <div><h4>Sauces</h4><ul>${SAUCES.map(s => `<li>${esc(s)}</li>`).join('')}</ul></div>
+  <div><h4>Sides</h4><ul>${SIDES.map(s => `<li>${esc(s)}</li>`).join('')}</ul></div>`;
+
+const tileOf = m => `<div class="tile" aria-hidden="true">${esc(m.name)}</div>`;
+const controls = m => m.build
+  ? `<button class="plus" data-build="${m.build}" aria-label="Choose ${esc(m.name)}">+</button>`
+  : `<button class="plus" data-add="${m.id}" aria-label="Add ${esc(m.name)}">+</button>
+     <div class="stepper"><button data-d="-1" data-id="${m.id}" aria-label="Remove one ${esc(m.name)}">−</button><span data-qty="${m.id}">0</span><button data-d="1" data-id="${m.id}" aria-label="Add one ${esc(m.name)}">+</button></div>`;
+$('#groups').innerHTML = GROUPS.map(([k, v]) => `<section class="block" id="g-${k}" aria-labelledby="gh-${k}">
+  <div class="block-h"><h2 class="h2" id="gh-${k}">${v}</h2>${k === 'kitchen' ? '<small>When they\'re on</small>' : ''}</div>
+  <div class="rows">${ITEMS.filter(m => m.cat === k).map(m => `<article class="row" data-dish="${m.id}">
+    <div><h3>${esc(m.name)}</h3><p>${esc(m.desc)}</p><div class="meta"><span class="price">${money(m.price)}</span></div></div>
+    <div class="thumb"><div class="pic">${tileOf(m)}</div>${controls(m)}</div>
+  </article>`).join('')}</div></section>`).join('');
+
+function renderMenu() {
+  ITEMS.forEach(m => {
+    const q = lineQty(m.id);
+    $$(`[data-dish="${m.id}"]`).forEach(el => el.classList.toggle('in', q > 0));
+    $$(`[data-qty="${m.id}"]`).forEach(el => el.textContent = q);
+  });
+  const n = bagCount(), b = $('#bagCount');
+  b.textContent = n; b.dataset.n = n;
+  $('#barCount').textContent = n; $('#barAmt').textContent = money(bagTotal());
+  $('#bar').classList.toggle('on', n > 0 && !$('#sheet').classList.contains('open') && !$('#builder').classList.contains('open'));
+  renderAgain();
+}
+let tT;
+function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(tT); tT = setTimeout(() => t.classList.remove('show'), 1800); }
+function pulseBar() { if (window.gsap && !reduce) gsap.fromTo('#bar .bar-btn', { scale: .96 }, { scale: 1, duration: .4, ease: 'back.out(3)' }); }
+function changeSimple(id, d, quiet) {
+  const m = byId(id); if (!m) return;
+  if (lineQty(id) === 0 && d > 0) addLine({ key: id, name: m.name, detail: '', unit: m.price, img: m.img || '' });
+  else bumpLine(id, d);
+  if (d > 0) { buzz(); if (!quiet) toast(`Added ${m.name}`); pulseBar(); }
+  renderMenu(); if ($('#sheet').classList.contains('open')) renderSheet();
+}
+
+/* ---------- Plate builder (dropdowns) ---------- */
+let b = null;
+const newBuild = kind => kind === 'side'
+  ? { kind: 'side', side: '', qty: 1 }
+  : { kind: 'plate', size: kind, mains: [{ id: '', opt: '' }, { id: '', opt: '' }], sides: ['', ''], extra: [], mac: 0, drink: '', notes: '', qty: 1 };
+function buildPrice() {
+  if (b.kind === 'side') return EXTRA_SIDE * b.qty;
+  const s = SIZES[b.size];
+  let p = s.price;
+  b.mains.slice(0, s.mains).forEach(m => { const mm = mainById(m.id); if (mm && mm.up) p += mm.up; });
+  p += b.extra.length * EXTRA_SIDE + b.mac * SIDE_MAC + (b.drink ? DRINK : 0);
+  return p * b.qty;
+}
+const opt = (v, cur, label = v) => `<option value="${esc(v)}" ${v === cur ? 'selected' : ''}>${esc(label)}</option>`;
+function renderBuilder() {
+  const body = $('#bBody');
+  if (b.kind === 'side') {
+    $('#bTitle').textContent = 'Extra side';
+    body.innerHTML = `<div class="sh-sec"><div class="field"><label for="b-side">Pick a side · ${money(EXTRA_SIDE)}</label>
+      <select id="b-side" data-bf="side">${opt('', b.side, 'Choose a side')}${SIDES.map(x => opt(x, b.side)).join('')}</select></div></div>
+      ${qtyRow()}`;
+    renderBuilderFoot(); return;
+  }
+  const s = SIZES[b.size];
+  $('#bTitle').textContent = 'Build your plate';
+  const mainSel = i => {
+    const m = b.mains[i], list = MAINS.filter(x => !s.allowed || s.allowed.includes(x.id)), mm = mainById(m.id);
+    return `<div class="field"><label for="b-main-${i}">${s.mains > 1 ? `Main ${i + 1}` : 'Main'}</label>
+      <select id="b-main-${i}" data-bf="main" data-i="${i}">${opt('', m.id, 'Choose a main')}${list.map(x => opt(x.id, m.id, x.name + (x.sub ? ` (${x.sub})` : '') + (x.up ? ` +${money(x.up)}` : ''))).join('')}</select></div>
+      ${mm && mm.opt ? `<div class="field sub"><label for="b-opt-${i}">${mm.opt.label}</label><select id="b-opt-${i}" data-bf="opt" data-i="${i}">${opt('', m.opt, `Choose ${mm.opt.label.toLowerCase()}`)}${mm.opt.list.map(x => opt(x, m.opt)).join('')}</select></div>` : ''}`;
+  };
+  const sideSel = (i, val, attr, label) => `<div class="field"><label for="b-${attr}-${i}">${label}</label>
+      <div class="sel-row"><select id="b-${attr}-${i}" data-bf="${attr}" data-i="${i}">${opt('', val, 'Choose a side')}${SIDES.map(x => opt(x, val)).join('')}</select>${attr === 'extra' ? `<button type="button" class="x sm" data-rmx="${i}" aria-label="Remove extra side">✕</button>` : ''}</div></div>`;
+  body.innerHTML = `
+    <div class="sh-sec"><h3>Size</h3>
+      <div class="sizes" role="group" aria-label="Plate size">${Object.entries(SIZES).map(([k, z]) => `<button id="sz-${k}" data-size="${k}" aria-pressed="${k === b.size}"><b>${z.name}</b><small>${money(z.price)} · ${z.mains} main${z.mains > 1 ? 's' : ''}, ${z.sides} side${z.sides > 1 ? 's' : ''}</small></button>`).join('')}</div>
+      ${s.allowed ? '<p class="fine">Mini Lunch comes with shrimp or boneless chicken.</p>' : ''}
+    </div>
+    <div class="sh-sec"><h3>${s.mains > 1 ? 'Mains' : 'Main'}</h3>${Array.from({ length: s.mains }, (_, i) => mainSel(i)).join('')}</div>
+    <div class="sh-sec"><h3>${s.sides > 1 ? 'Sides' : 'Side'}</h3>${Array.from({ length: s.sides }, (_, i) => sideSel(i, b.sides[i], 'side', s.sides > 1 ? `Side ${i + 1}` : 'Side')).join('')}</div>
+    <div class="sh-sec"><h3>Add-ons <small>optional</small></h3>
+      ${b.extra.map((v, i) => sideSel(i, v, 'extra', `Extra side · +${money(EXTRA_SIDE)}`)).join('')}
+      <button type="button" class="addon" id="addExtra">+ Add an extra side <span>+${money(EXTRA_SIDE)}</span></button>
+      <div class="addon-row"><span>Side of Mac Attack <small>+${money(SIDE_MAC)}</small></span><div class="qty"><button type="button" data-mac="-1" aria-label="Remove side of mac">−</button><span>${b.mac}</span><button type="button" data-mac="1" aria-label="Add side of mac">+</button></div></div>
+      <div class="field"><label for="b-drink">Drink · +${money(DRINK)}</label><select id="b-drink" data-bf="drink">${opt('', b.drink, 'No drink')}${DRINKS.map(x => opt(x, b.drink)).join('')}</select></div>
+    </div>
+    <div class="sh-sec"><div class="field"><label for="b-notes">Allergies or requests</label><textarea id="b-notes" data-bf="notes" placeholder="Tell us about any allergies or dietary needs. We're happy to accommodate.">${esc(b.notes)}</textarea></div></div>
+    ${qtyRow()}`;
+  renderBuilderFoot();
+}
+const qtyRow = () => `<div class="addon-row"><span><b>How many?</b></span><div class="qty"><button type="button" data-bq="-1" aria-label="One fewer">−</button><span id="bQty">${b.qty}</span><button type="button" data-bq="1" aria-label="One more">+</button></div></div><p class="err" id="bErr" hidden></p>`;
+function renderBuilderFoot() { $('#bFoot').innerHTML = `<button class="btn btn-pink btn-block" id="bAdd">Add to order · ${money(buildPrice())}</button>`; }
+function describe() {
+  if (b.kind === 'side') return { name: 'Extra side', detail: b.side, unit: EXTRA_SIDE, img: '' };
+  const s = SIZES[b.size];
+  const mains = b.mains.slice(0, s.mains).map(m => { const mm = mainById(m.id); return mm.name + (m.opt ? ` (${m.opt})` : ''); });
+  const parts = [mains.join(' + '), b.sides.slice(0, s.sides).join(', ')];
+  if (b.extra.length) parts.push('Extra: ' + b.extra.join(', '));
+  if (b.mac) parts.push(`Side of Mac ×${b.mac}`);
+  if (b.drink) parts.push(b.drink);
+  if (b.notes.trim()) parts.push('Note: ' + b.notes.trim());
+  return { name: `${s.name} plate`, detail: parts.join(' · '), unit: buildPrice() / b.qty, img: s.img };
+}
+function missing() {
+  if (b.kind === 'side') return b.side ? null : ['b-side', 'Pick a side.'];
+  const s = SIZES[b.size];
+  for (let i = 0; i < s.mains; i++) {
+    const m = b.mains[i], mm = mainById(m.id);
+    if (!mm) return [`b-main-${i}`, `Choose ${s.mains > 1 ? 'main ' + (i + 1) : 'your main'}.`];
+    if (mm.opt && !m.opt) return [`b-opt-${i}`, `Choose a ${mm.opt.label.toLowerCase()} for the ${mm.name.toLowerCase()}.`];
+  }
+  for (let i = 0; i < s.sides; i++) if (!b.sides[i]) return [`b-side-${i}`, `Choose ${s.sides > 1 ? 'side ' + (i + 1) : 'your side'}.`];
+  const xi = b.extra.findIndex(v => !v); if (xi > -1) return [`b-extra-${xi}`, 'Pick the extra side, or remove it.'];
+  return null;
+}
+function openBuilder(kind) {
+  b = newBuild(kind); renderBuilder();
+  lastFocus = document.activeElement;
+  $('#builder').classList.add('open'); $('#builder').inert = false; $('#scrim').classList.add('on'); document.body.classList.add('locked');
+  $('#bar').classList.remove('on'); $('#bBody').scrollTop = 0;
+  setTimeout(() => (b.kind === 'side' ? $('#b-side') : $('#b-main-0'))?.focus({ preventScroll: true }), 350);
+}
+function closeBuilder() {
+  $('#builder').classList.remove('open'); $('#builder').inert = true;
+  if (!$('#sheet').classList.contains('open')) { $('#scrim').classList.remove('on'); document.body.classList.remove('locked'); }
+  renderMenu(); lastFocus?.focus?.({ preventScroll: true });
+}
+document.addEventListener('change', e => {
+  const f = e.target.dataset?.bf; if (!f || !b) return;
+  const i = +e.target.dataset.i, v = e.target.value;
+  if (f === 'main') { b.mains[i] = { id: v, opt: '' }; renderBuilder(); $(`#b-opt-${i}`) ? $(`#b-opt-${i}`).focus() : $(`#b-main-${i}`).focus(); return; }
+  if (f === 'opt') b.mains[i].opt = v;
+  if (f === 'side') { if (b.kind === 'side') b.side = v; else b.sides[i] = v; }
+  if (f === 'extra') b.extra[i] = v;
+  if (f === 'drink') b.drink = v;
+  $('#bErr') && ($('#bErr').hidden = true);
+  renderBuilderFoot();
+});
+document.addEventListener('input', e => { if (e.target.id === 'b-notes' && b) b.notes = e.target.value; });
+
+/* ---------- Order again (saved on this phone) ---------- */
+function renderAgain() {
+  const last = store.get('stz_last_lines') || [];
+  $('#againBtn').classList.toggle('on', last.length > 0 && bagCount() === 0);
+  $('#againList').textContent = last.map(l => `${l.qty}× ${l.name}`).join(', ');
+}
+
+/* ---------- Checkout sheet ---------- */
+const co = { mode: null, slot: null, pay: 'apple', done: null };
+const profile = store.get('stz_profile') || {};
+co.name = profile.name || ''; co.phone = profile.phone || '';
+function slots() { const sd = serviceDay(), out = []; for (let t = sd.start; t <= CLOSE - 15; t += 15) out.push(t); return { sd, out }; }
+function renderSheet() {
+  if (co.done) {
+    $('#shBody').innerHTML = `<div class="big-ok"><div class="ring">✓</div><strong>Order ${co.done.no}</strong>
+      <p>${esc(co.done.name)}, pick it up ${co.done.when} at 126 W 238th Street. We'll text ${esc(co.done.phone)} when it's ready.</p></div>
+      <p class="fine" style="text-align:center">Demo only: no order was placed and no card was charged. On the live site, payment goes straight to Stizzy through Stripe or Square.</p>`;
+    $('#shFoot').innerHTML = `<button class="btn btn-pink btn-block" id="doneBtn">Done</button>`;
+    return;
+  }
+  if (!lines.length) {
+    $('#shBody').innerHTML = `<div class="big-ok"><strong>Nothing here yet</strong><p>Build a plate or tap + on any item to add it.</p></div>`;
+    $('#shFoot').innerHTML = `<button class="btn btn-pink btn-block" id="toMenu">See the menu</button>`; return;
+  }
+  const { sd, out } = slots();
+  const asap = isOpenNow();
+  if (co.mode === null) co.mode = asap ? 'asap' : 'later';
+  if (co.mode === 'asap' && !asap) co.mode = 'later';
+  if (co.mode === 'later' && (co.slot === null || !out.includes(co.slot))) co.slot = out[0] ?? null;
+  const when = co.mode === 'asap' ? `in about ${READY_MIN} min` : `${fmt(co.slot)} ${dayWord(sd)}`;
+  $('#shBody').innerHTML = `
+    <div class="sh-sec">${lines.map((l, i) => `<div class="li">
+      <div class="tn">${l.img ? `<img src="${l.img}" alt="">` : `<div class="tile">${esc(l.name)}</div>`}</div>
+      <div><h4>${esc(l.name)}</h4>${l.detail ? `<p class="li-d">${esc(l.detail)}</p>` : ''}<span class="price">${money(l.unit * l.qty)}</span></div>
+      <div class="qty"><button data-ld="-1" data-line="${i}" aria-label="Remove one ${esc(l.name)}">−</button><span>${l.qty}</span><button data-ld="1" data-line="${i}" aria-label="Add one ${esc(l.name)}">+</button></div></div>`).join('')}
+      <button class="addon" id="addAnother">+ Build another plate</button></div>
+    <div class="sh-sec"><h3>Pickup <small>${sd.date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</small></h3>
+      <div class="seg">
+        <button id="modeAsap" data-mode="asap" aria-pressed="${co.mode === 'asap'}" ${asap ? '' : 'disabled'}>ASAP<small>${asap ? `ready in ~${READY_MIN} min` : 'opens ' + fmt(OPEN)}</small></button>
+        <button id="modeLater" data-mode="later" aria-pressed="${co.mode === 'later'}">Pick a time<small>${co.mode === 'later' && co.slot !== null ? fmt(co.slot) : 'choose below'}</small></button>
+      </div>
+      ${co.mode === 'later' ? `<div class="times" id="times">${out.map(t => `<button class="time" id="t-${t}" data-slot="${t}" aria-pressed="${co.slot === t}">${fmt(t)}</button>`).join('')}</div>` : ''}
+    </div>
+    <div class="sh-sec"><h3>Your info ${profile.name ? '<small>saved on this phone</small>' : ''}</h3>
+      <div class="grid2">
+        <div class="field"><label for="coName">Name</label><input id="coName" autocomplete="given-name" value="${esc(co.name)}" enterkeyhint="next"></div>
+        <div class="field"><label for="coPhone">Phone</label><input id="coPhone" type="tel" inputmode="tel" autocomplete="tel" value="${esc(co.phone)}" placeholder="For the ready text" enterkeyhint="done"></div>
+      </div>
+      <label class="save"><input type="checkbox" id="coSave" checked> Save my info for next time</label>
+    </div>
+    <div class="sh-sec"><h3>Pay</h3>
+      <div class="pay" role="group" aria-label="Payment method">
+        <button data-pay="apple" aria-pressed="${co.pay === 'apple'}">Apple Pay</button>
+        <button data-pay="google" aria-pressed="${co.pay === 'google'}">Google Pay</button>
+        <button data-pay="card" aria-pressed="${co.pay === 'card'}">Card</button>
+      </div>
+    </div>
+    <p class="err" id="coErr" hidden></p>`;
+  $('#shFoot').innerHTML = `<div class="tot"><span>Menu price · <b>no service fees</b></span><span>Pickup ${esc(when)}</span></div>
+    <button class="btn btn-pink btn-block" id="placeBtn">Place order · ${money(bagTotal())}</button>`;
+}
+let lastFocus;
+function openSheet() {
+  lastFocus = document.activeElement; co.done = null; renderSheet();
+  $('#sheet').classList.add('open'); $('#sheet').inert = false; $('#scrim').classList.add('on'); document.body.classList.add('locked');
+  $('#bar').classList.remove('on'); $('#closeSheet').focus({ preventScroll: true });
+}
+function closeSheet() {
+  $('#sheet').classList.remove('open'); $('#sheet').inert = true; $('#scrim').classList.remove('on'); document.body.classList.remove('locked');
+  renderMenu(); lastFocus?.focus?.({ preventScroll: true });
+}
+
+document.addEventListener('input', e => { if (e.target.id === 'coName') co.name = e.target.value; if (e.target.id === 'coPhone') co.phone = e.target.value; });
+document.addEventListener('click', e => {
+  const t = e.target;
+  const bd = t.closest('[data-build]'); if (bd) { if ($('#sheet').classList.contains('open')) closeSheet(); openBuilder(bd.dataset.build); return; }
+  const add = t.closest('[data-add]'); if (add) { changeSimple(add.dataset.add, 1); add.closest('[data-dish]')?.querySelector('.stepper button[data-d="1"]')?.focus({ preventScroll: true }); return; }
+  const st = t.closest('[data-d][data-id]'); if (st) { changeSimple(st.dataset.id, +st.dataset.d, true); return; }
+  const ld = t.closest('[data-ld]'); if (ld) { bumpLine(lines[+ld.dataset.line].key, +ld.dataset.ld); renderMenu(); renderSheet(); return; }
+  /* builder controls */
+  const sz = t.closest('[data-size]'); if (sz && b) { b.size = sz.dataset.size; const s = SIZES[b.size]; if (s.allowed) b.mains = b.mains.map(m => s.allowed.includes(m.id) ? m : { id: '', opt: '' }); renderBuilder(); $('#sz-' + b.size).focus(); return; }
+  if (t.closest('#addExtra')) { b.extra.push(''); renderBuilder(); $(`#b-extra-${b.extra.length - 1}`)?.focus(); return; }
+  const rx = t.closest('[data-rmx]'); if (rx) { b.extra.splice(+rx.dataset.rmx, 1); renderBuilder(); $('#addExtra')?.focus(); return; }
+  const mc = t.closest('[data-mac]'); if (mc) { b.mac = Math.max(0, b.mac + +mc.dataset.mac); renderBuilder(); $(`[data-mac="${mc.dataset.mac}"]`)?.focus(); return; }
+  const bq = t.closest('[data-bq]'); if (bq) { b.qty = Math.max(1, b.qty + +bq.dataset.bq); $('#bQty').textContent = b.qty; renderBuilderFoot(); return; }
+  if (t.closest('#bAdd')) {
+    const miss = missing();
+    if (miss) { const err = $('#bErr'); err.hidden = false; err.textContent = miss[1]; $('#' + miss[0])?.focus(); return; }
+    const d = describe();
+    addLine({ key: d.name + '|' + d.detail, ...d }, b.qty);
+    buzz(); toast(`Added ${d.name}`); closeBuilder(); pulseBar(); return;
+  }
+  if (t.closest('#closeBuilder')) { closeBuilder(); return; }
+  if (t.closest('#addAnother')) { closeSheet(); openBuilder('medium'); return; }
+  const jump = t.closest('[data-jump]'); if (jump) { document.getElementById(jump.dataset.jump).scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); return; }
+  if (t.closest('#bagBtn,#barBtn')) { if ($('#builder').classList.contains('open')) closeBuilder(); openSheet(); return; }
+  if (t.closest('#closeSheet,#doneBtn')) { closeSheet(); return; }
+  if (t.id === 'scrim') { $('#builder').classList.contains('open') ? closeBuilder() : closeSheet(); return; }
+  if (t.closest('#toMenu')) { closeSheet(); document.getElementById('menu').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); return; }
+  const md = t.closest('[data-mode]'); if (md && !md.disabled) { co.mode = md.dataset.mode; renderSheet(); $(co.mode === 'asap' ? '#modeAsap' : '#modeLater')?.focus(); return; }
+  const sl = t.closest('[data-slot]'); if (sl) { co.slot = +sl.dataset.slot; const sc = $('#times')?.scrollLeft; renderSheet(); if ($('#times')) $('#times').scrollLeft = sc; $('#t-' + co.slot)?.focus({ preventScroll: true }); return; }
+  const py = t.closest('[data-pay]'); if (py) { co.pay = py.dataset.pay; $$('[data-pay]').forEach(x => x.setAttribute('aria-pressed', x === py)); return; }
+  if (t.closest('#againBtn')) { (store.get('stz_last_lines') || []).forEach(l => addLine(l, l.qty)); renderMenu(); toast('Your last order is in the bag'); openSheet(); return; }
+  if (t.closest('#placeBtn')) {
+    const err = $('#coErr'), name = co.name.trim(), digits = co.phone.replace(/\D/g, '');
+    const bad = !name ? ['coName', 'Add your name for the order.'] : digits.length < 10 ? ['coPhone', 'Enter a 10-digit phone number for the ready text.'] : (co.mode === 'later' && co.slot === null) ? [null, 'Pick a pickup time.'] : null;
+    if (bad) { err.hidden = false; err.textContent = bad[1]; if (bad[0]) $('#' + bad[0]).focus(); return; }
+    const sd = serviceDay();
+    if ($('#coSave')?.checked) store.set('stz_profile', { name, phone: co.phone }); profile.name = name;
+    store.set('stz_last_lines', lines.map(l => ({ ...l })));
+    co.done = { no: '#' + (1000 + Math.floor(Math.random() * 9000)), name: name.split(' ')[0], phone: co.phone, when: co.mode === 'asap' ? `in about ${READY_MIN} minutes` : `at ${fmt(co.slot)} ${dayWord(sd)}` };
+    lines = []; co.mode = null; renderMenu(); renderSheet(); buzz();
+  }
+});
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  if ($('#builder').classList.contains('open')) closeBuilder(); else if ($('#sheet').classList.contains('open')) closeSheet();
+});
+
+/* swipe a sheet down to close */
+[['#sheet', '#shBody', () => closeSheet()], ['#builder', '#bBody', () => closeBuilder()]].forEach(([sel, bodySel, close]) => {
+  const sh = $(sel); let y0 = null, dy = 0;
+  sh.addEventListener('touchstart', e => { if (e.target.closest('select,textarea,input')) return; if (e.target.closest(bodySel) && $(bodySel).scrollTop > 0) return; y0 = e.touches[0].clientY; dy = 0; sh.style.transition = 'none'; }, { passive: true });
+  sh.addEventListener('touchmove', e => { if (y0 === null) return; dy = Math.max(0, e.touches[0].clientY - y0); sh.style.transform = `translateY(${dy}px)`; }, { passive: true });
+  sh.addEventListener('touchend', () => { if (y0 === null) return; sh.style.transition = ''; sh.style.transform = ''; if (dy > 110) close(); y0 = null; });
+});
+
+/* ---------- Reel videos: play only while on screen ---------- */
+(() => {
+  const vids = $$('video.auto');
+  if (reduce) { vids.forEach(v => v.controls = true); return; }
+  if (!('IntersectionObserver' in window)) { vids.forEach(v => v.play().catch(() => {})); return; }
+  const io = new IntersectionObserver(es => es.forEach(en => { const v = en.target; if (en.isIntersecting) { const p = v.play(); p && p.catch(() => { v.controls = true; }); } else v.pause(); }), { threshold: .4 });
+  vids.forEach(v => io.observe(v));
+})();
+
+/* ---------- Scrollspy for category tabs ---------- */
+const spyTargets = ['menu', ...GROUPS.map(g => 'g-' + g[0])].map(id => document.getElementById(id));
+const spy = new IntersectionObserver(es => {
+  es.forEach(en => {
+    if (!en.isIntersecting) return;
+    const id = en.target.id, key = id === 'menu' ? 'menu' : id.slice(2);
+    $$('.cat').forEach(c => c.setAttribute('aria-current', c.id === 'cat-' + key));
+    const c = $('#cat-' + key); c && c.parentElement.scrollTo({ left: c.offsetLeft - 16, behavior: reduce ? 'auto' : 'smooth' });
+  });
+}, { rootMargin: '-130px 0px -60% 0px' });
+spyTargets.forEach(t => spy.observe(t));
+
+/* ---------- Catering ---------- */
+const CATER_DISHES = ['Bistec Guisado', 'Grilled Chicken a la Creme', 'Shrimp', 'Salmon', 'Boneless fried chicken', 'Moro negro', 'Maduros & tostones', 'Mac Attack', 'Dominican Spaghetti', 'Lemonades'];
+function renderCater(done) {
+  if (done) {
+    $('#caterCard').innerHTML = `<p class="kicker">Catering</p><div class="done"><strong>Thanks, ${esc(done.name)}.</strong><span>${esc(done.count)} people on ${esc(done.date)}. Nicole would reply with a quote by text.</span></div>
+      <p class="fine">Demo only: nothing was sent. On the live site this goes straight to Nicole's phone and email.</p><button class="btn btn-ghost" id="caterAgain">Send another request</button>`;
+    return;
+  }
+  const min = new Date(); min.setDate(min.getDate() + 3);
+  $('#caterCard').innerHTML = `<p class="kicker">Catering</p><h2 class="h2" id="catH">Dominican food for the <em>whole party</em></h2>
+    <p class="lead">Birthdays, office lunches, family nights. Send the basics and Nicole texts you a quote.</p>
+    <form id="caterForm" novalidate style="display:grid;gap:12px">
+      <div class="grid2">
+        <div class="field"><label for="cDate">Date</label><input id="cDate" type="date" min="${min.toISOString().slice(0, 10)}"></div>
+        <div class="field"><label for="cCount">People</label><select id="cCount"><option value="">Choose</option><option>10–20</option><option>20–40</option><option>40–75</option><option>75–150</option><option>150+</option></select></div>
+      </div>
+      <div class="grid2">
+        <div class="field"><label for="cName">Name</label><input id="cName" autocomplete="name"></div>
+        <div class="field"><label for="cPhone">Phone</label><input id="cPhone" type="tel" inputmode="tel" autocomplete="tel"></div>
+      </div>
+      <details><summary>Add dishes, budget or notes (optional)</summary>
+        <div style="display:grid;gap:12px;margin-top:8px">
+          <div class="chips">${CATER_DISHES.map((d, i) => `<span class="chip"><input type="checkbox" id="cd${i}"><label for="cd${i}">${esc(d)}</label></span>`).join('')}</div>
+          <div class="field"><label for="cBudget">Budget</label><select id="cBudget"><option value="">Not sure yet</option><option>Under $300</option><option>$300–$600</option><option>$600–$1,200</option><option>$1,200+</option></select></div>
+          <div class="field"><label for="cNotes">Notes</label><textarea id="cNotes" placeholder="Allergies, pickup time, the occasion…"></textarea></div>
+        </div>
+      </details>
+      <p class="err" id="cErr" hidden></p>
+      <button class="btn btn-pink btn-block" type="submit">Request a quote</button>
+    </form>`;
+}
+renderCater();
+document.addEventListener('submit', e => {
+  if (e.target.id === 'caterForm') {
+    e.preventDefault();
+    const date = $('#cDate').value, count = $('#cCount').value, name = $('#cName').value.trim(), digits = $('#cPhone').value.replace(/\D/g, '');
+    const bad = !date ? ['cDate', 'Pick the date.'] : !count ? ['cCount', 'Choose roughly how many people.'] : !name ? ['cName', 'Add your name.'] : digits.length < 10 ? ['cPhone', 'Enter a 10-digit phone number so Nicole can text the quote.'] : null;
+    const err = $('#cErr');
+    if (bad) { err.hidden = false; err.textContent = bad[1]; $('#' + bad[0]).focus(); return; }
+    renderCater({ name: name.split(' ')[0], count, date: new Date(date + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }) });
+  }
+  if (e.target.id === 'textForm') {
+    e.preventDefault();
+    const digits = $('#txtPhone').value.replace(/\D/g, '');
+    if (digits.length < 10) { $('#textMsg').textContent = 'Enter a 10-digit phone number.'; $('#txtPhone').focus(); return; }
+    $('#textForm').outerHTML = `<p class="done"><strong>You're on the list.</strong></p>`;
+    $('#textMsg').textContent = "Demo only: no number was saved. On the live site you'd get a text when each menu drops.";
+  }
+});
+document.addEventListener('click', e => { if (e.target.closest('#caterAgain')) renderCater(); });
+
+/* ---------- Headline: stretch toward the finger or cursor ---------- */
+$$('[data-split]').forEach(r => { r.innerHTML = [...r.textContent].map(c => c === ' ' ? ' ' : `<span class="ch" aria-hidden="true">${c}</span>`).join(''); });
+const chars = $$('.title .ch');
+if (!reduce) {
+  const stretch = (x, y) => chars.forEach(c => { const b = c.getBoundingClientRect(); const d = Math.hypot(x - (b.left + b.width / 2), y - (b.top + b.height / 2)); c.style.setProperty('--w', Math.round(96 - Math.min(1, d / 200) * 30)); });
+  const reset = () => chars.forEach(c => c.style.setProperty('--w', 78));
+  $('#title').addEventListener('pointermove', e => stretch(e.clientX, e.clientY));
+  $('#title').addEventListener('pointerleave', reset);
+  $('#title').addEventListener('touchmove', e => stretch(e.touches[0].clientX, e.touches[0].clientY), { passive: true });
+  $('#title').addEventListener('touchend', reset);
+}
+
+renderMenu();
+
+/* ---------- Motion ---------- */
+if (window.gsap && !reduce) {
+  chars.forEach(c => c.style.transition = 'none');
+  gsap.timeline()
+    .from('.sign-wrap', { y: -24, opacity: 0, duration: .9, ease: 'expo.out' }, 0)
+    .fromTo(chars, { '--w': 50, yPercent: 35 }, { '--w': 78, yPercent: 0, duration: 1, ease: 'expo.out', stagger: .022, onComplete: () => chars.forEach(c => c.style.transition = '') }, .15)
+    .from('.pov, .intro-copy, .facts, .drop, .intro-ctas', { y: 16, opacity: 0, duration: .7, ease: 'expo.out', stagger: .07 }, .55)
+    .from('.pick', { x: 40, opacity: 0, duration: .8, ease: 'expo.out', stagger: .08 }, .7);
+  const neon = $$('.title .neon .ch');
+  gsap.fromTo(neon, { opacity: .35 }, { opacity: 1, duration: .08, repeat: 6, yoyo: true, ease: 'steps(1)', delay: 1.2, stagger: { each: .03, from: 'random' } });
+}
+})();
+</script>
+</body>
+</html>
